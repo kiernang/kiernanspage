@@ -1,135 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kiernan's Page</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 700px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      background-color: #fdfdfd;
-      line-height: 1.6;
-    }
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Kiernan's Page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
 
-    nav a {
-      margin-right: 1rem;
-      text-decoration: none;
-      color: #007777;
-      font-weight: bold;
-    }
+    <!-- Sidebar (Right Side) -->
+    <section id="sidebar" style="right: 0; left: auto;">
+      <div class="inner">
+        <nav>
+          <ul>
+            <li><a href="#intro">welcome</a></li>
+            <li><a href="#cv">cv</a></li>
+            <li><a href="#interests">interests</a></li>
+            <li><a href="#design">design stuff</a></li>
+            <li><a href="#hobbies">hobbies</a></li>
+            <li><a href="#things">random things i like</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
 
-    section {
-      margin-top: 3rem;
-    }
+    <!-- Wrapper -->
+    <div id="wrapper">
 
-    h1 {
-      margin-bottom: 0.5rem;
-    }
+      <!-- Intro -->
+      <section id="intro" class="wrapper style1 fullscreen fade-up">
+        <div class="inner">
+          <h1>Kiernan</h1>
+          <p>🛰️ welcome to my personal website 🛰️</p>
+        </div>
+      </section>
 
-    h2 {
-      margin-top: 2rem;
-    }
+      <!-- CV Section -->
+      <section id="cv" class="wrapper style2 fade-up">
+        <div class="inner">
+          <h2>📜 CV 📜</h2>
+          <p><a href="cv.pdf" target="_blank">Download my CV</a></p>
+          <ul>
+            <li><strong>Inference Economics</strong> – Founder, Lead Economist (20XX–Now)</li>
+            <li><strong>placeholder</strong> –</li>
+            <li><strong>University of British Columbia</strong> – Masters Economics</li>
+          </ul>
+        </div>
+      </section>
 
-    h3 {
-      cursor: pointer;
-      color: #333;
-      margin-bottom: 0.2rem;
-    }
+      <!-- Interests Section -->
+      <section id="interests" class="wrapper style1 fade-up">
+        <div class="inner">
+          <h2>🧠 interests 🧠</h2>
+          <div>
+            <h3 onclick="toggle(this)">🌆 cities, urbanism</h3>
+            <ul class="hidden">
+              <li><a href="#">Apartment scraper tool</a></li>
+              <li><a href="#">Analysis on zoning and density</a></li>
+              <li><a href="#">Planning for people, not cars</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-    .hidden {
-      display: none;
-    }
+      <!-- Design Stuff -->
+      <section id="design" class="wrapper style2 fade-up">
+        <div class="inner">
+          <h2>💻 design stuff 💻</h2>
+          <ul>
+            <li><strong>placeholder</strong> – placeholder</li>
+            <li><strong>placeholder</strong> –</li>
+            <li><strong>placeholder</strong> – placeholder</li>
+          </ul>
+        </div>
+      </section>
 
-    footer {
-      margin-top: 4rem;
-      font-size: 0.9rem;
-      text-align: center;
-      color: #777;
-    }
+      <!-- Hobbies -->
+      <section id="hobbies" class="wrapper style1 fade-up">
+        <div class="inner">
+          <h2>🚵 hobbies 🚵</h2>
+          <ul>
+            <li><strong>placeholder</strong> – placeholder</li>
+            <li><strong>placeholder</strong> –</li>
+            <li><strong>placeholder</strong> – placeholder</li>
+          </ul>
+        </div>
+      </section>
 
-    a {
-      color: #005555;
-    }
-  </style>
-</head>
-<body>
+      <!-- Things I Like -->
+      <section id="things" class="wrapper style2 fade-up">
+        <div class="inner">
+          <h2>🤝 things i like 🤝</h2>
+          <p>🔧 <strong>Tools I Like:</strong></p>
+          <ul>
+            <li><a href="https://excalidraw.com" target="_blank">Excalidraw</a> – for sketching messy systems</li>
+            <li><a href="https://obsidian.md" target="_blank">Obsidian</a> – for connected notes</li>
+            <li><a href="https://www.are.na/" target="_blank">Are.na</a> – for beautiful link dumping</li>
+          </ul>
+        </div>
+      </section>
 
-  <h1>Kiernan</h1>
-  <p><em>🛰️ welcome to my personal website 🛰️</em></p>
-
-  <nav>
-    <a href="#cv">cv</a>
-    <a href="#interests">interests</a>
-    <a href="#design">design stuff</a>
-    <a href="#hobbies">hobbies</a>
-    <a href="#things">random things i like</a>
-  </nav>
-
-  <section id="cv">
-    <h2>📜 CV 📜</h2>
-    <p><a href="cv.pdf" target="_blank">Download my CV</a></p>
-    <ul>
-      <li><strong>Inference Economics</strong> – Founder, Lead Economist (20XX–Now)</li>
-      <li><strong>placeholder</strong> –</li>
-      <li><strong>University of British Columbia</strong> – Masters Economics</li>
-    </ul>
-  </section>
-
-  <section id="interests">
-    <h2>🧠 interests 🧠</h2>
-
-    <div>
-      <h3 onclick="toggle(this)">🌆 cities, urbanism</h3>
-      <ul class="hidden">
-        <li><a href="#">Apartment scraper tool</a></li>
-        <li><a href="#">Analysis on zoning and density</a></li>
-        <li><a href="#">Planning for people, not cars</a></li>
-      </ul>
     </div>
-  </section>
 
-  <section id="design">
-    <h2>💻 design stuff 💻</h2>
-    <ul>
-      <li><strong>placeholder</strong> – placeholder</li>
-      <li><strong>placeholder</strong> –</li>
-      <li><strong>placeholder</strong> – placeholder</li>
-    </ul>
-  </section>
+    <!-- Footer -->
+    <footer id="footer" class="wrapper style1-alt">
+      <div class="inner">
+        <ul class="menu">
+          <li>Site by Kiernan • <a href="mailto:kiernan.gange@gmail.com">Email</a> • <a href="https://github.com/kiernang">GitHub</a></li>
+        </ul>
+      </div>
+    </footer>
 
-  <section id="hobbies">
-    <h2>🚵 hobbies 🚵</h2>
-    <ul>
-      <li><strong>placeholder</strong> – placeholder</li>
-      <li><strong>placeholder</strong> –</li>
-      <li><strong>placeholder</strong> – placeholder</li>
-    </ul>
-  </section>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      function toggle(header) {
+        const list = header.nextElementSibling;
+        list.classList.toggle('hidden');
+      }
+    </script>
 
-  <section id="things">
-    <h2>🤝 things i like 🤝</h2>
-    <p>🔧 <strong>Tools I Like:</strong></p>
-    <ul>
-      <li><a href="https://excalidraw.com" target="_blank">Excalidraw</a> – for sketching messy systems</li>
-      <li><a href="https://obsidian.md" target="_blank">Obsidian</a> – for connected notes</li>
-      <li><a href="https://www.are.na/" target="_blank">Are.na</a> – for beautiful link dumping</li>
-    </ul>
-  </section>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
 
-  <footer>
-    <p>Site by Kiernan • <a href="mailto:kiernan.gange@gmail.com">Email</a> • <a href="https://github.com/kiernang">GitHub</a></p>
-    
-  </footer>
-
-  <script>
-    function toggle(header) {
-      const list = header.nextElementSibling;
-      list.classList.toggle('hidden');
-    }
-  </script>
-
-</body>
+  </body>
 </html>
