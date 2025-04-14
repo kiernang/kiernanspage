@@ -58,12 +58,32 @@
         text-align: center;
         padding: 2em 0;
       }
+      .galloping-horses {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-image: url('images/horses.png');
+  background-repeat: repeat-x;
+  background-size: auto 60%;
+  opacity: 0.15;
+  animation: gallop 20s linear infinite;
+  z-index: 500; /* behind the nav bar */
+  pointer-events: none;
+}
+
+@keyframes gallop {
+  from { background-position: 0 0; }
+  to { background-position: 100% 0; }
+}
     </style>
   </head>
   <body class="is-preload">
 
     <!-- Top Navigation -->
     <header id="topnav">
+      <div class="galloping-horses"></div>
       <nav>
         <ul>
           <li><a href="#intro">welcome</a></li>
