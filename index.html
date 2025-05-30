@@ -59,24 +59,44 @@
         padding: 2em 0;
       }
       .galloping-horses {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4rem;
-  background-image: url('images/horses.png');
-  background-repeat: repeat-x;
-  background-size: auto 60%;
-  opacity: 0.15;
-  animation: gallop 20s linear infinite;
-  z-index: 500; /* behind the nav bar */
-  pointer-events: none;
-}
-
-@keyframes gallop {
-  from { background-position: 100% 0; }
-  to { background-position: 0 0; }
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4rem;
+        background-image: url('images/horses.png');
+        background-repeat: repeat-x;
+        background-size: auto 60%;
+        opacity: 0.15;
+        animation: gallop 20s linear infinite reverse;
+        z-index: 500;
+        pointer-events: none;
+      }
+      @keyframes gallop {
+        from { background-position: 100% 0; }
+        to { background-position: 0 0; }
+      }
+      #cv::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('images/fish_dots.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.6;
+        z-index: 0;
+        pointer-events: none;
+      }
+      #cv {
+        position: relative;
+        z-index: 1;
+      }
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body class="is-preload">
@@ -159,7 +179,6 @@
             <li><strong>billiards</strong></li>
           </ul>
         </div>
-        
       </section>
 
       <!-- Things I Like -->
@@ -200,12 +219,6 @@
         list.classList.toggle('hidden');
       }
     </script>
-
-    <style>
-      .hidden {
-        display: none;
-      }
-    </style>
 
   </body>
 </html>
