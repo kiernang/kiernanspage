@@ -162,6 +162,21 @@
       padding: 0 1rem;
     }
   }
+  
+  @media (max-width: 768px) {
+    header#topnav nav ul {
+      flex-direction: row;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 0.5rem;
+      gap: 1rem;
+      scrollbar-width: none;
+    }
+
+    header#topnav nav ul::-webkit-scrollbar {
+      display: none;
+    }
+  }
 </style>
   </head>
   <body class="is-preload">
