@@ -167,14 +167,16 @@ section h2 {
   }
   
   @media (max-width: 768px) {
-    header#topnav nav ul {
-      flex-direction: row;
-      overflow-x: auto;
-      white-space: nowrap;
-      padding-bottom: 0.5rem;
-      gap: 1rem;
-      scrollbar-width: none;
-    }
+  header#topnav nav ul {
+    display: none;
+  }
+
+  .galloping-horses {
+    height: 2.5rem;
+    background-size: auto 40%;
+    opacity: 0.2;
+  }
+}
 
     header#topnav nav ul::-webkit-scrollbar {
       display: none;
