@@ -7,21 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
+   <style>
   body {
     font-family: 'Newsreader', serif;
     color: #111111;
-    background-color: #bfffbf;Add commentMore actions
+    background-color: #bfffbf;
     margin: 0;
     padding-top: 4rem;
     font-size: 16px;
   }
 
-  h1, h2, h3, nav a {
+  h1,h2, h3, nav a {
     font-family: 'IBM Plex Mono', monospace;
     color: #111111;
   }
-
+section h2 {
+  text-align: center;
+}
+  
   a {
     color: #1A4AFF;
     text-decoration: none;
@@ -77,8 +80,8 @@
     height: 4rem;
     background-image: url('images/horses.png');
     background-repeat: repeat-x;
-    background-size: auto 60%;
-    opacity: 0.15;
+    background-size: auto 65%;
+    opacity: 0.25;
     animation: gallop 20s linear infinite;
     z-index: 500;
     pointer-events: none;
@@ -110,7 +113,7 @@
     background-size: 23%;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.6;
+    opacity: 0.25;
     z-index: 0;
     pointer-events: none;
   }
@@ -162,6 +165,25 @@
       padding: 0 1rem;
     }
   }
+  
+  @media (max-width: 768px) {
+    header#topnav nav ul {
+      flex-direction: row;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 0.5rem;
+      gap: 1rem;
+      scrollbar-width: none;
+    }
+
+    header#topnav nav ul::-webkit-scrollbar {
+      display: none;
+    }
+  }
+     strong {
+  color: #104d1f; /* dark forest green */
+  font-weight: bold;
+}
 </style>
   </head>
   <body class="is-preload">
