@@ -73,19 +73,20 @@ section h2 {
   }
 
   .galloping-horses {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4rem;
-    background-image: url('images/horses.png');
-    background-repeat: repeat-x;
-    background-size: auto 65%;
-    opacity: 0.25;
-    animation: gallop 20s linear infinite;
-    z-index: 500;
-    pointer-events: none;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-image: url('images/horses.png');
+  background-repeat: repeat-x;
+  background-size: auto 60%;
+  background-position: 100% 0;
+  animation: gallop 8s linear infinite;
+  opacity: 0.15;
+  z-index: 500;
+  pointer-events: none;
+}
 
   @keyframes gallop {
     from { background-position: 100% 0; }
@@ -166,26 +167,18 @@ section h2 {
     }
   }
   
- @media (max-width: 768px) {
-  header#topnav nav ul {
-    display: none;
-  }
-
+@media (max-width: 768px) {
   .galloping-horses {
-    height: 2.5rem; /* doubled from 2.5rem */
-    background-size: auto 80%; /* doubled from 40% */
-    opacity: 0.25;
-    background-repeat: repeat-x;
-    opacity: 0.25;
-    animation: gallop 20s linear infinite;
-    z-index: 500;
-    pointer-events: none;
+    height: 2.5rem;
+    background-size: auto 80%;
+    animation: gallop 8s linear infinite;
   }
 
   body {
-    padding-top: 5rem; /* match new ribbon height */
+    padding-top: 5rem;
   }
 }
+
 
     header#topnav nav ul::-webkit-scrollbar {
       display: none;
