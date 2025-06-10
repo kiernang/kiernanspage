@@ -7,164 +7,162 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-      body {
-        font-family: 'Newsreader', serif;
-        color: #111111;
-        background-color: #bfffbf;
-        margin: 0;
-        padding-top: 4rem;
-      }
-      h1, h2, h3, nav a {
-        font-family: 'IBM Plex Mono', monospace;
-        color: #111111;
-      }
-      a {
-        color: #1A4AFF;
-        text-decoration: none;
-      }
-      a:hover {
-        color: #FFE21D;
-      }
-      header#topnav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: #236333;
-        border-bottom: 1px solid #ccc;
-        padding: 1rem 2rem;
-        z-index: 1000;
-      }
-      header#topnav nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin: 0;
-        padding: 0;
-      }
-      header#topnav nav ul li a {
-        text-transform: uppercase;
-        font-weight: bold;
-        color: #111111;
-      }
-      header#topnav nav ul li a:hover {
-        color: #1A4AFF;
-      }
-      footer {
-        background-color: #236333;
-        border-top: 1px solid #ccc;
-        text-align: center;
-        padding: 2em 0;
-      }
-      .galloping-horses {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4rem;
-        background-image: url('images/horses.png');
-        background-repeat: repeat-x;
-        background-size: auto 60%;
-        opacity: 0.15;
-        animation: gallop 20s linear infinite;
-        z-index: 500;
-        pointer-events: none;
-      }
-      @keyframes gallop {
-        from { background-position: 100% 0; }
-        to { background-position: 0 0; }
-      }
-      #cv::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('images/fish_dots.png');
-        background-size: 22%;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.4;
-        z-index: 0;
-        pointer-events: none;
-      }
-      #cv {
-        position: relative;
-        z-index: 1;
-      }
-      .hidden {
-        display: none;
-      }
-      #interests::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('images/dog_png.png');
-        background-size: 23%;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.4;
-        z-index: 0;
-        pointer-events: none;
-      }
-      #interests {
-        position: relative;
-        z-index: 1;
-      }
-      .hidden {
-        display: none;
-      }
-       #hobbies::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('images/bison_dots.png');
-        background-size: 23%;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.4;
-        z-index: 0;
-        pointer-events: none;
-      }
-      #hobbies {
-        position: relative;
-        z-index: 1;
-      }
-      .hidden {
-        display: none;
-      }
-       #things::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('images/computer_dots.png');
-        background-size: 23%;
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.4;
-        z-index: 0;
-        pointer-events: none;
-      }
-      #things {
-        position: relative;
-        z-index: 1;
-      }
-      .hidden {
-        display: none;
-      }
-    </style>
+   <style>
+  body {
+    font-family: 'Newsreader', serif;
+    color: #111111;
+    background-color: #bfffbf;
+    margin: 0;
+    padding-top: 4rem;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #111111;
+  }
+
+  a {
+    color: #1A4AFF;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #FFE21D;
+  }
+
+  header#topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #236333;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 2rem;
+    z-index: 1000;
+  }
+
+  header#topnav nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  header#topnav nav ul li a {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #111111;
+  }
+
+  header#topnav nav ul li a:hover {
+    color: #1A4AFF;
+  }
+
+  footer {
+    background-color: #236333;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    padding: 2em 1em;
+  }
+
+  .galloping-horses {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    background-image: url('images/horses.png');
+    background-repeat: repeat-x;
+    background-size: auto 60%;
+    opacity: 0.15;
+    animation: gallop 20s linear infinite;
+    z-index: 500;
+    pointer-events: none;
+  }
+
+  @keyframes gallop {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+
+  .inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  #cv::before,
+  #interests::before,
+  #hobbies::before,
+  #things::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: 23%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #cv::before { background-image: url('images/fish_dots.png'); }
+  #interests::before { background-image: url('images/dog_png.png'); }
+  #hobbies::before { background-image: url('images/bison_dots.png'); }
+  #things::before { background-image: url('images/computer_dots.png'); }
+
+  #cv, #interests, #hobbies, #things {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    header#topnav nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    .galloping-horses {
+      height: 2.5rem;
+      background-size: auto 40%;
+    }
+
+    section {
+      padding: 2rem 1rem;
+    }
+
+    .inner {
+      padding: 0 1rem;
+    }
+  }
+</style>
   </head>
   <body class="is-preload">
 
