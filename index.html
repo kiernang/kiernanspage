@@ -166,15 +166,13 @@ section h2 {
     }
   }
   
-  @media (max-width: 768px) {
-    header#topnav nav ul {
-      flex-direction: row;
-      overflow-x: auto;
-      white-space: nowrap;
-      padding-bottom: 0.5rem;
-      gap: 1rem;
-      scrollbar-width: none;
-    }
+@media (max-width: 768px) {
+  header#topnav nav {
+    display: none; /* hide nav links on mobile */
+  }
+
+
+}
 
     header#topnav nav ul::-webkit-scrollbar {
       display: none;
