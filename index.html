@@ -166,15 +166,19 @@ section h2 {
     }
   }
   
-  @media (max-width: 768px) {
+ @media (max-width: 768px) {
   header#topnav nav ul {
     display: none;
   }
 
   .galloping-horses {
-    height: 2.5rem;
-    background-size: auto 40%;
+    height: 5rem; /* doubled from 2.5rem */
+    background-size: auto 80%; /* doubled from 40% */
     opacity: 0.2;
+  }
+
+  body {
+    padding-top: 5rem; /* match new ribbon height */
   }
 }
 
