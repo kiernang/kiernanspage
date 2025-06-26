@@ -274,17 +274,21 @@ section h2 {
     <a href="#">Heterogenous Apartment Listing Platform Preference by Geography</a><br>
      - This is the fanciest way I can say that you have to look on different websites for apartments depending on what city you're in. This is an issue because it makes it harder to move cities and you end up spending more time looking for deals. The difference between Vancouver and Toronto:
     <br><br>
-    <img src="images/listings_may_2025.png" alt="Rental Listings Chart" style="max-width:100%; height:auto; border: 1px solid #ccc; margin: 1rem 0;">
+    <img src="images/listings_may_2025.png" alt="Rental Listings Chart" style="max-width:100%; height:auto; margin: 1rem 0;">
     <br>
    <p>Kijiji dominates in Toronto and Craigslist dominates in Vancouver (this is from one month, sure, but this is just illustrative), and that doesn't take into consideration other platforms like RentFaster or Marketplace or Realtor.</p>
    Here's the other reason why it matters: In this situation, there's an information asymmetry that really only benefits people that own a ton of properties and can collect their own data, or people that are professionals and spend their time posting on these platforms frequently.
    It harms the renter, and the "mom and pop" landlords that don't have a sense of what a fair price in their market is.</p>
+  <br><br>
+    <img src="images/listings_per_capita.png" alt="Rental Listings per 10000 residents" style="max-width:100%; height:auto; margin: 1rem 0;">
+    <br>
+  <p> Here's the same chart per 10,000 residents of each city's respective metro population. </p>
    <p>In an ideal world, in my opinion, the government should have their own platform that automatically connects to CRA and allows renters and landlords to either report income easier or claim benefits easier.
    Competition between platforms does not generate a superior product but instead increases search costs and harms consumers.</p>
               <li><a href="#">7-day average for Toronto Apartment prices on Kijiji</a>
               <!-- Load Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<div id="bedroom_price_chart" style="width: 100%; height: 800px; margin-top: 2rem;"></div>
+<div id="bedroom_price_chart" style="width: 100%; height:auto; margin-top: 2rem;"></div>
 
 
 <script type="text/javascript">
@@ -313,7 +317,7 @@ section h2 {
   hAxis: { title: 'Date' },
   vAxis: { title: 'Price ($)' },
   colors: ['#104d1f', '#236333', '#1A4AFF'],
-  chartArea: { width: '85%', height: '70%' }
+  chartArea: { width: '100%', height: '100%' }
 };
 
       const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
