@@ -310,15 +310,16 @@ section h2 {
       }
 
       const data = response.getDataTable();
-      const options = {
+     const options = {
   title: 'Median Rental Prices by Bedroom Count',
   backgroundColor: '#bfffbf',
+  height: 1600,  // <-- Set explicit height
   curveType: 'function',
   legend: { position: 'bottom' },
   hAxis: { title: 'Date' },
   vAxis: { title: 'Price ($)' },
   colors: ['#104d1f', '#236333', '#1A4AFF'],
-  chartArea: { left: 60, top: 60, width: '85%', height: '70%' }
+  chartArea: { left: 60, top: 60, width: '85%', height: '80%' }  // Optional: raise chart area height %
 };
 
       const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
