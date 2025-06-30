@@ -250,8 +250,8 @@ section h2 {
       <p>My graduate research paper focused on the impact on community well being of opting out of several sections of the Indian Act for First Nations in Western Canada.
       The results were mixed. The analysis was based mostly in Stata using Statistics Canada data.</p>
       <p><strong>University of Winnipeg</strong> – BA (Hons) in Economics</p>
-      <p>Gold Medal in Honours Economics winner. Here's a <a <href = "https://www.uwinnipeg.ca/fbe/docs/business_and_economics_annual_report_final.pdf#page=8" target ="_blank"> profile on me</a> included in the annual report of my graduating year.</p>
-    </div>
+      <p>Gold Medal in Honours Economics winner. Here's a<p>Gold Medal in Honours Economics winner. Here's a <a href="https://www.uwinnipeg.ca/fbe/docs/business_and_economics_annual_report_final.pdf#page=8" target="_blank">profile on me</a> included in the annual report of my graduating year.</p>
+
   </div>
 </section>
 
@@ -286,19 +286,15 @@ section h2 {
    Competition between platforms does not generate a superior product but instead increases search costs and harms consumers.</p>
               <li><a href="#">7-day average for Toronto Apartment prices on Kijiji</a>
                 <p>Using Kijiji data we can see how the 7-day median prices of new listings in Toronto has evolved over time. This chart updates automatically.</p>
-              <!-- Load Google Charts -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<div style="width: 200vw; margin-left: -50vw; left: 50%; position: relative;">
-  <div id="bedroom_price_chart" style="width: 100vw; height: 600px;"></div>
+<!-- Google Charts container -->
+<div style="display: flex; justify-content: center; margin: 2rem 0;">
+  <div id="bedroom_price_chart" style="width: 1200px; height: 600px;"></div>
 </div>
 
-
-
-
-<!-- Google Charts Script -->
+<!-- Load Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
+  google.charts.load('current', { 'packages': ['corechart'] });
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
@@ -319,19 +315,23 @@ section h2 {
         title: 'Median Rental Prices by Bedroom Count',
         backgroundColor: '#bfffbf',
         height: 600,
+        width: 1200,
         curveType: 'function',
-        legend: { position: 'bottom' },
-        hAxis: { title: 'Date' },
-        vAxis: { title: 'Price ($)' },
+        legend: {
+          position: 'bottom',
+          textStyle: { fontSize: 14 }
+        },
+        hAxis: { title: 'Date', textStyle: { fontSize: 12 }, titleTextStyle: { fontSize: 14 } },
+        vAxis: { title: 'Price ($)', textStyle: { fontSize: 12 }, titleTextStyle: { fontSize: 14 } },
         colors: ['#104d1f', '#236333', '#1A4AFF'],
-        chartArea: { left: 60, top: 60, width: '100%', height: '100%' }
+        chartArea: { left: 80, top: 60, width: '85%', height: '65%' }
       };
 
       const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
       chart.draw(data, options);
     });
   }
-</script></li>
+</script>
               <li><a href="#">Planning for people, not cars</a></li>
             </ul>
           <h3 onclick="toggle(this)">🇨🇦canadian economic development🇨🇦</h3>
