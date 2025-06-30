@@ -285,10 +285,10 @@ section h2 {
    <p>In an ideal world, in my opinion, the government should have their own platform that automatically connects to CRA and allows renters and landlords to either report income easier or claim benefits easier.
    Competition between platforms does not generate a superior product but instead increases search costs and harms consumers.</p>
               <li><a href="#">7-day average for Toronto Apartment prices on Kijiji</a>
-                <p>Using Kijiji data we can see how the 7-day median prices of new listings in Toronto has evolved over time. This chart updates automatically.</p>
+                <p>Using Kijiji data we can see how the 7-day median prices of new listings in Toronto has evolved over time. This chart updates automatically. This pulls directly from the google sheet that the data is stored in, so outliers remain in the dataset and can occasionally skew the data. Additionally, I group 3+ bedrooms together, so there are occassionally groups of listings that skew that series. The intention of this data is to create a time-series of rental listings that would have predictive power over trends in the rental market.</p>
 <!-- Google Charts container -->
 <div style="display: flex; justify-content: center; margin: 2rem 0;">
-    <div id="bedroom_price_chart" style="width: 1200px; height: 600px;"></div>
+    <div id="bedroom_price_chart" style="width: 1200px; height: 750px;"></div>
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -311,7 +311,7 @@ section h2 {
 
             const data = response.getDataTable();
 
-         
+            // Set the column labels for the legend
             data.setColumnLabel(1, '1 Bedroom');
             data.setColumnLabel(2, '2 Bedroom');
             data.setColumnLabel(3, '3+ Bedrooms');
@@ -319,7 +319,8 @@ section h2 {
             const options = {
                 title: 'Median Rental Prices by Bedroom Count',
                 backgroundColor: '#bfffbf',
-                height: 600,
+                // *** IMPORTANT FIX: INCREASED CHART HEIGHT ***
+                height: 750, // Increased from 600px to provide more vertical space
                 width: 1200,
                 curveType: 'function',
                 legend: {
@@ -328,20 +329,20 @@ section h2 {
                 },
                 hAxis: {
                     title: 'Date',
-                    format: 'MMM yyyy', 
-                    slantedText: true,   
-                   
+                    format: 'MMM YYYY', // Changed MMM???? to MMM YYYY for clarity and correctness
+                    slantedText: true,
                     textStyle: { fontSize: 12 },
                     titleTextStyle: { fontSize: 14 },
-                    gridlines: { count: -1 } 
+                    gridlines: { count: -1 }
                 },
                 vAxis: {
                     title: 'Price ($)',
                     textStyle: { fontSize: 12 },
                     titleTextStyle: { fontSize: 14 },
-                    format: '$#,###' 
+                    format: '$#,###'
                 },
                 colors: ['#104d1f', '#236333', '#1A4AFF'],
+                // Revert chartArea height to be more standard, as overall height is increased
                 chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
             };
 
