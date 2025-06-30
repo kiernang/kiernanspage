@@ -291,63 +291,65 @@ section h2 {
   <div id="bedroom_price_chart" style="width: 1200px; height: 600px;"></div>
 </div>
 
-<!-- Load Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
   google.charts.load('current', { 'packages': ['corechart'] });
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-  const queryString = encodeURIComponent("SELECT A, E, F, G");
-  const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
-  const sheetName = "medians_by_beds";
-  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
+    const queryString = encodeURIComponent("SELECT A, E, F, G");
+    const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
+    const sheetName = "medians_by_beds";
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&headers=0&tq=${queryString}`;
 
-  const query = new google.visualization.Query(url);
-  query.send(response => {
-    if (response.isError()) {
-      console.error('Error in chart query:', response.getMessage(), response.getDetailedMessage());
-      return;
-    }
+    const query = new google.visualization.Query(url);
+    query.send(response => {
+      if (response.isError()) {
+        console.error('Error in chart query:', response.getMessage(), response.getDetailedMessage());
+        return;
+      }
 
-    const data = response.getDataTable();
+      const data = response.getDataTable();
 
-    // Force custom labels
-    data.setColumnLabel(1, '1 Bedroom');
-    data.setColumnLabel(2, '2 Bedroom');
-    data.setColumnLabel(3, '3+ Bedrooms');
+      // Force the column labels
+      data.setColumnLabel(1, '1 Bedroom');
+      data.setColumnLabel(2, '2 Bedroom');
+      data.setColumnLabel(3, '3+ Bedrooms');
 
-    const options = {
-      title: 'Median Rental Prices by Bedroom Count',
-      backgroundColor: '#bfffbf',
-      height: 600,
-      width: 1200,
-      curveType: 'function',
-      legend: {
-        position: 'bottom',
-        textStyle: { fontSize: 14 }
-      },
-      hAxis: {
-        title: 'Date',
-        textStyle: { fontSize: 12 },
-        titleTextStyle: { fontSize: 14 }
-      },
-      vAxis: {
-        title: 'Price ($)',
-        textStyle: { fontSize: 12 },
-        titleTextStyle: { fontSize: 14 }
-      },
-      colors: ['#104d1f', '#236333', '#1A4AFF'],
-      chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
-    };
+      const options = {
+        title: 'Median Rental Prices by Bedroom Count',
+        backgroundColor: '#bfffbf',
+        height: 600,
+        width: 1200,
+        curveType: 'function',
+        legend: {
+          position: 'bottom',
+          textStyle: { fontSize: 14 }
+        },
+        hAxis: {
+          title: 'Date',
+          format: 'MMM yyyy',
+          slantedText: true,
+          slantedTextAngle: 45,
+          textStyle: { fontSize: 12 },
+          titleTextStyle: { fontSize: 14 }
+        },
+        vAxis: {
+          title: 'Price ($)',
+          textStyle: { fontSize: 12 },
+          titleTextStyle: { fontSize: 14 }
+        },
+        colors: ['#104d1f', '#236333', '#1A4AFF'],
+        chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
+      };
 
-    const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
-    chart.draw(data, options);
-  });
-}
-
+      const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
+      chart.draw(data, options);
+    });
+  }
 </script>
-              <li><a href="#">Planning for people, not cars</a></li>
+
+              <li><a href="#">Forecasting rental listings using Prophet and Kijiji data</a></li>
             </ul>
           <h3 onclick="toggle(this)">🇨🇦canadian economic development🇨🇦</h3>
             <ul class="hidden">
