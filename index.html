@@ -297,66 +297,73 @@ section h2 {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        const queryString = encodeURIComponent("SELECT A, E, F, G");
-        const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
-        const sheetName = "medians_by_beds";
-        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&headers=0&tq=${queryString}`;
+  const queryString = encodeURIComponent("SELECT A, E, F, G");
+  const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
+  const sheetName = "medians_by_beds";
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
 
-        const query = new google.visualization.Query(url);
-        query.send(response => {
-            if (response.isError()) {
-                console.error('Error in chart query:', response.getMessage(), response.getDetailedMessage());
-                return;
-            }
-
-            const data = response.getDataTable();
-
-            // Set the column labels for the legend
-            data.setColumnLabel(1, '1 Bedroom');
-            data.setColumnLabel(2, '2 Bedroom');
-            data.setColumnLabel(3, '3+ Bedrooms');
-
-            // --- DEBUGGING STEP 1: Log the column labels to console ---
-            console.log('Legend Label for Column 1:', data.getColumnLabel(1));
-            console.log('Legend Label for Column 2:', data.getColumnLabel(2));
-            console.log('Legend Label for Column 3:', data.getColumnLabel(3));
-            // --- END DEBUGGING STEP 1 ---
-
-            const options = {
-                title: 'Median Rental Prices by Bedroom Count',
-                backgroundColor: '#bfffbf',
-                height: 750,
-                width: 1200,
-                curveType: 'function',
-                legend: {
-                    position: 'bottom',
-                    textStyle: {
-                        fontSize: 14,
-                        color: 'black' // --- FIX 1: Explicitly set legend text color ---
-                    }
-                },
-                hAxis: {
-                    title: 'Date',
-                    format: 'MMM YYYY', // Corrected format to 'MMM YYYY' for Month Year
-                    slantedText: true,
-                    textStyle: { fontSize: 12 },
-                    titleTextStyle: { fontSize: 14 },
-                    gridlines: { count: -1 }
-                },
-                vAxis: {
-                    title: 'Price ($)',
-                    textStyle: { fontSize: 12 },
-                    titleTextStyle: { fontSize: 14 },
-                    format: '$#,###'
-                },
-                colors: ['#104d1f', '#236333', '#1A4AFF'],
-                chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
-            };
-
-            const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
-            chart.draw(data, options);
-        });
+  const query = new google.visualization.Query(url);
+  query.send(response => {
+    if (response.isError()) {
+      console.error('Error in chart query:', response.getMessage(), response.getDetailedMessage());
+      return;
     }
+
+    const rawData = response.getDataTable();
+
+    // Build new table with explicit labels
+    const data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', '1 Bedroom');
+    data.addColumn('number', '2 Bedroom');
+    data.addColumn('number', '3+ Bedrooms');
+
+    for (let i = 0; i < rawData.getNumberOfRows(); i++) {
+      data.addRow([
+        rawData.getValue(i, 0),
+        rawData.getValue(i, 1),
+        rawData.getValue(i, 2),
+        rawData.getValue(i, 3)
+      ]);
+    }
+
+    // 🔁 This is your customized options block
+    const options = {
+      title: 'Median Rental Prices by Bedroom Count',
+      backgroundColor: '#bfffbf',
+      height: 750,
+      width: 1200,
+      curveType: 'function',
+      legend: {
+        position: 'bottom',
+        textStyle: {
+          fontSize: 14,
+          color: 'black'
+        }
+      },
+      hAxis: {
+        title: 'Date',
+        format: 'MMM yyyy',
+        slantedText: true,
+        textStyle: { fontSize: 12 },
+        titleTextStyle: { fontSize: 14 },
+        gridlines: { count: -1 }
+      },
+      vAxis: {
+        title: 'Price ($)',
+        textStyle: { fontSize: 12 },
+        titleTextStyle: { fontSize: 14 },
+        format: '$#,###'
+      },
+      colors: ['#104d1f', '#236333', '#1A4AFF'],
+      chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
+    };
+
+    const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
+    chart.draw(data, options);
+  });
+}
+
 </script>
               <li><a href="#">Forecasting rental listings using Prophet and Kijiji data</a></li>
             </ul>
