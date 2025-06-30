@@ -316,20 +316,28 @@ section h2 {
             data.setColumnLabel(2, '2 Bedroom');
             data.setColumnLabel(3, '3+ Bedrooms');
 
+            // --- DEBUGGING STEP 1: Log the column labels to console ---
+            console.log('Legend Label for Column 1:', data.getColumnLabel(1));
+            console.log('Legend Label for Column 2:', data.getColumnLabel(2));
+            console.log('Legend Label for Column 3:', data.getColumnLabel(3));
+            // --- END DEBUGGING STEP 1 ---
+
             const options = {
                 title: 'Median Rental Prices by Bedroom Count',
                 backgroundColor: '#bfffbf',
-                // *** IMPORTANT FIX: INCREASED CHART HEIGHT ***
-                height: 750, // Increased from 600px to provide more vertical space
+                height: 750,
                 width: 1200,
                 curveType: 'function',
                 legend: {
                     position: 'bottom',
-                    textStyle: { fontSize: 14 }
+                    textStyle: {
+                        fontSize: 14,
+                        color: 'black' // --- FIX 1: Explicitly set legend text color ---
+                    }
                 },
                 hAxis: {
                     title: 'Date',
-                    format: 'MMM YYYY', // Changed MMM???? to MMM YYYY for clarity and correctness
+                    format: 'MMM YYYY', // Corrected format to 'MMM YYYY' for Month Year
                     slantedText: true,
                     textStyle: { fontSize: 12 },
                     titleTextStyle: { fontSize: 14 },
@@ -342,7 +350,6 @@ section h2 {
                     format: '$#,###'
                 },
                 colors: ['#104d1f', '#236333', '#1A4AFF'],
-                // Revert chartArea height to be more standard, as overall height is increased
                 chartArea: { left: 80, top: 60, width: '85%', height: '60%' }
             };
 
