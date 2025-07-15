@@ -304,22 +304,39 @@ section h2 {
               <li><a href="#">7-day average for Toronto Apartment prices on Kijiji</a>
                 <p>Using Kijiji data we can see how the 7-day median prices of new listings in Toronto has evolved over time. This chart updates automatically. This pulls directly from the google sheet that the data is stored in, so outliers remain in the dataset and can occasionally skew the data. Additionally, I group 3+ bedrooms together, so there are occassionally groups of listings that skew that series. The intention of this data is to create a time-series of rental listings that would have predictive power over trends in the rental market.</p>
 <!-- Chart container and trend widget -->
-<div id="bedroom_price_chart" style="width: 100%; max-width: 1000px; height: 500px; background-color: transparent;"></div>
-<div id="trend_widget"></div>
+<div style="display: flex; justify-content: center; margin: 2rem 0;">
+  <div id="bedroom_price_chart" style="width: 100%; max-width: 1000px; height: 60vh; background-color: transparent;"></div>
+</div>
+
+<!-- Trend Widget -->
+<div id="trend_widget" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;"></div>
+
+<style>
+  .trend-card {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    text-align: center;
+    font-family: sans-serif;
+  }
+</style>
                
 
 
 
 <!-- Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', { packages: ['corechart'] });
-  google.charts.setOnLoadCallback(drawChartWithTrends);
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawResponsiveChart);
 
-  function drawChartWithTrends() {
+  function drawResponsiveChart() {
     const queryString = encodeURIComponent("SELECT A, E, F, G");
     const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
     const sheetName = "medians_by_beds";
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
+    const url = https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString};
 
     const query = new google.visualization.Query(url);
     query.send(response => {
@@ -329,6 +346,8 @@ section h2 {
       }
 
       const rawData = response.getDataTable();
+
+      // Build formatted table
       const data = new google.visualization.DataTable();
       data.addColumn('date', 'Date');
       data.addColumn('number', '1 Bedroom');
@@ -344,53 +363,83 @@ section h2 {
         ]);
       }
 
-      const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
-      chart.draw(data, {
+      // Dynamic style based on screen width
+      const isMobile = window.innerWidth < 600;
+      const options = {
         title: 'Median Rental Prices by Bedroom Count',
         backgroundColor: 'transparent',
+        height: isMobile ? 400 : 750,
+        width: '100%',
         curveType: 'function',
-        legend: { position: 'bottom' },
+        legend: {
+          position: isMobile ? 'bottom' : 'center',
+          textStyle: {
+            fontSize: isMobile ? 9 : 11,
+            color: 'black'
+          }
+        },
         hAxis: {
           title: 'Date',
           format: 'MMM yyyy',
-          slantedText: true
+          slantedText: true,
+          textStyle: { fontSize: isMobile ? 10 : 12 },
+          titleTextStyle: { fontSize: isMobile ? 12 : 14 },
+          gridlines: { count: -1 }
         },
         vAxis: {
           title: 'Price ($)',
+          textStyle: { fontSize: isMobile ? 10 : 12 },
+          titleTextStyle: { fontSize: isMobile ? 12 : 14 },
           format: '$#,###'
         },
         colors: ['#104d1f', '#236333', '#1A4AFF'],
         chartArea: { left: 60, top: 60, width: '80%', height: '60%' }
+      };
+
+      const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
+      chart.draw(data, options);
+      // === Trend Widget Logic ===
+if (data.getNumberOfRows() >= 2) {
+  const lastIndex = data.getNumberOfRows() - 1;
+  const prevIndex = data.getNumberOfRows() - 2;
+
+  const trends = [
+    { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(prevIndex, 1) },
+    { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(prevIndex, 2) },
+    { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(prevIndex, 3) }
+  ];
+
+  const trendDiv = document.getElementById('trend_widget');
+  trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
+    const diff = curr - prev;
+    const pct = ((diff / prev) * 100).toFixed(1);
+    let icon = "➡", color = "gray", text = "No Change";
+
+    if (curr > prev) {
+      icon = "🔺";
+      color = "green";
+      text = `${pct}% increase`;
+    } else if (curr < prev) {
+      icon = "🔻";
+      color = "red";
+      text = `${Math.abs(pct)}% decrease`;
+    }
+
+    return `
+      <div class="trend-card">
+        <strong>${label}</strong><br>
+        <span style="color: ${color}; font-size: 1.2rem;">${icon} ${text}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+      // Redraw on resize with debounce
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => chart.draw(data, options), 150);
       });
-
-      // TREND WIDGET
-      if (data.getNumberOfRows() < 2) return;
-
-      const lastIndex = data.getNumberOfRows() - 1;
-      const prevIndex = data.getNumberOfRows() - 2;
-
-      const trends = [
-        { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(prevIndex, 1) },
-        { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(prevIndex, 2) },
-        { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(prevIndex, 3) }
-      ];
-
-      const trendDiv = document.getElementById('trend_widget');
-      trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
-        const diff = curr - prev;
-        const pct = ((diff / prev) * 100).toFixed(1);
-        let icon = "➡", color = "gray", text = "No Change";
-        if (curr > prev) {
-          icon = "🔺"; color = "green"; text = `${pct}% increase`;
-        } else if (curr < prev) {
-          icon = "🔻"; color = "red"; text = `${Math.abs(pct)}% decrease`;
-        }
-        return `
-          <div class="trend-card">
-            <strong>${label}</strong><br>
-            <span style="color: ${color}; font-size: 1.2rem;">${icon} ${text}</span>
-          </div>`;
-      }).join('');
     });
   }
 </script>
