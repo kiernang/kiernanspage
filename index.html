@@ -308,7 +308,7 @@ section h2 {
   <div id="bedroom_price_chart" style="width: 100%; max-width: 1000px; height: 60vh; background-color: transparent;"></div>
 
   <!-- Trend Widget -->
-  <div id="trend_widget" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;"></div>
+  <div id="trend_widget" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 3rem;"></div>
 </div>
 
 <style>
@@ -331,7 +331,7 @@ section h2 {
 
   function drawResponsiveChart() {
     const queryString = encodeURIComponent("SELECT A, E, F, G");
-    const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";  // ✅ Corrected ID
+    const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
     const sheetName = "medians_by_beds";
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
 
@@ -343,7 +343,6 @@ section h2 {
       }
 
       const rawData = response.getDataTable();
-
       const data = new google.visualization.DataTable();
       data.addColumn('date', 'Date');
       data.addColumn('number', '1 Bedroom');
@@ -385,13 +384,17 @@ section h2 {
           format: '$#,###'
         },
         colors: ['#104d1f', '#236333', '#1A4AFF'],
-        chartArea: { left: 60, top: 60, width: '80%', height: '60%' }
+        chartArea: { left: 60, top: 60, width: '80%', height: '65%' }  // More bottom padding
       };
 
-      const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
+      const chartEl = document.getElementById('bedroom_price_chart');
+      const chart = new google.visualization.LineChart(chartEl);
       chart.draw(data, options);
 
-      // === Trend Widget Logic ===
+      // Fix for initial size when collapsed
+      setTimeout(() => chart.draw(data, options), 250);
+
+      // Trend Widget
       if (data.getNumberOfRows() >= 2) {
         const lastIndex = data.getNumberOfRows() - 1;
         const prevIndex = data.getNumberOfRows() - 2;
@@ -431,7 +434,7 @@ section h2 {
         `;
       }
 
-      // Redraw on resize with debounce
+      // Redraw on window resize
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -440,6 +443,7 @@ section h2 {
     });
   }
 </script>
+
 
 
               <li>
