@@ -336,8 +336,7 @@ section h2 {
     const queryString = encodeURIComponent("SELECT A, E, F, G");
     const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
     const sheetName = "medians_by_beds";
-    const url = https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString};
-
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
     const query = new google.visualization.Query(url);
     query.send(response => {
       if (response.isError()) {
