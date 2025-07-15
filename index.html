@@ -327,27 +327,16 @@ section h2 {
 
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-  function toggle(header) {
-    const list = header.nextElementSibling;
-    const isHidden = list.classList.contains('hidden');
-    list.classList.toggle('hidden');
-
-  
-    if (isHidden && window.google && window.google.visualization && typeof drawResponsiveChart === "function") {
-      setTimeout(drawResponsiveChart, 100); // slight delay to allow rendering
-    }
-  }
-</script                
 <script type="text/javascript">
   google.charts.load('current', { 'packages': ['corechart'] });
   google.charts.setOnLoadCallback(drawResponsiveChart);
 
   function drawResponsiveChart() {
     const queryString = encodeURIComponent("SELECT A, E, F, G");
-    const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
+    const sheetID = "15lJpjMp9hniy9EvOTxSrq0MVfcRnTIJLY-qkPlTtOQY";
     const sheetName = "medians_by_beds";
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=${sheetName}&tq=${queryString}`;
+
     const query = new google.visualization.Query(url);
     query.send(response => {
       if (response.isError()) {
@@ -357,7 +346,6 @@ section h2 {
 
       const rawData = response.getDataTable();
 
-      // Build formatted table
       const data = new google.visualization.DataTable();
       data.addColumn('date', 'Date');
       data.addColumn('number', '1 Bedroom');
@@ -373,7 +361,6 @@ section h2 {
         ]);
       }
 
-      // Dynamic style based on screen width
       const isMobile = window.innerWidth < 600;
       const options = {
         title: 'Median Rental Prices by Bedroom Count',
@@ -383,10 +370,7 @@ section h2 {
         curveType: 'function',
         legend: {
           position: isMobile ? 'bottom' : 'center',
-          textStyle: {
-            fontSize: isMobile ? 9 : 11,
-            color: 'black'
-          }
+          textStyle: { fontSize: isMobile ? 9 : 11, color: 'black' }
         },
         hAxis: {
           title: 'Date',
@@ -408,41 +392,43 @@ section h2 {
 
       const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
       chart.draw(data, options);
+
       // === Trend Widget Logic ===
-if (data.getNumberOfRows() >= 2) {
-  const lastIndex = data.getNumberOfRows() - 1;
-  const prevIndex = data.getNumberOfRows() - 2;
+      if (data.getNumberOfRows() >= 2) {
+        const lastIndex = data.getNumberOfRows() - 1;
+        const prevIndex = data.getNumberOfRows() - 2;
 
-  const trends = [
-    { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(prevIndex, 1) },
-    { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(prevIndex, 2) },
-    { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(prevIndex, 3) }
-  ];
+        const trends = [
+          { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(prevIndex, 1) },
+          { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(prevIndex, 2) },
+          { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(prevIndex, 3) }
+        ];
 
-  const trendDiv = document.getElementById('trend_widget');
-  trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
-    const diff = curr - prev;
-    const pct = ((diff / prev) * 100).toFixed(1);
-    let icon = "➡", color = "gray", text = "No Change";
+        const trendDiv = document.getElementById('trend_widget');
+        trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
+          const diff = curr - prev;
+          const pct = ((diff / prev) * 100).toFixed(1);
+          let icon = "➡", color = "gray", text = "No Change";
 
-    if (curr > prev) {
-      icon = "🔺";
-      color = "green";
-      text = `${pct}% increase`;
-    } else if (curr < prev) {
-      icon = "🔻";
-      color = "red";
-      text = `${Math.abs(pct)}% decrease`;
-    }
+          if (curr > prev) {
+            icon = "🔺";
+            color = "green";
+            text = `${pct}% increase`;
+          } else if (curr < prev) {
+            icon = "🔻";
+            color = "red";
+            text = `${Math.abs(pct)}% decrease`;
+          }
 
-    return `
-      <div class="trend-card">
-        <strong>${label}</strong><br>
-        <span style="color: ${color}; font-size: 1.2rem;">${icon} ${text}</span>
-      </div>
-    `;
-  }).join('');
-}
+          return `
+            <div class="trend-card">
+              <strong>${label}</strong><br>
+              <span style="color: ${color}; font-size: 1.2rem;">${icon} ${text}</span><br>
+              <span style="font-size: 0.9rem; color: #555;">from last month</span>
+            </div>
+          `;
+        }).join('');
+      }
 
       // Redraw on resize with debounce
       let resizeTimer;
