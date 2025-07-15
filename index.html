@@ -195,6 +195,22 @@ section h2 {
   color: #104d1f; /* dark forest green */
   font-weight: bold;
 }
+     #trend_widget {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .trend-card {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    text-align: center;
+    font-family: sans-serif;
+  }
 </style>
   </head>
   <body class="is-preload">
@@ -329,6 +345,11 @@ section h2 {
         ]);
       }
 
+      if (data.getNumberOfRows() < 2) {
+        document.getElementById('trend_widget').innerHTML = "<div class='trend-card'>Not enough data to determine trends.</div>";
+        return;
+      }
+
       const draw = () => {
         const isMobile = window.innerWidth < 600;
         const options = {
@@ -365,7 +386,7 @@ section h2 {
         const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
         chart.draw(data, options);
 
-        // Render trend widget AFTER chart
+        // Add trend widget as styled cards
         const lastIndex = data.getNumberOfRows() - 1;
         const secondLastIndex = data.getNumberOfRows() - 2;
         const trends = [
@@ -373,17 +394,33 @@ section h2 {
           { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(secondLastIndex, 2) },
           { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(secondLastIndex, 3) }
         ];
+
         const trendDiv = document.getElementById('trend_widget');
         trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
-          if (curr > prev) return `<div><strong>${label}:</strong> <span style="color:green;">🔺 Trending Up</span></div>`;
-          if (curr < prev) return `<div><strong>${label}:</strong> <span style="color:red;">🔻 Trending Down</span></div>`;
-          return `<div><strong>${label}:</strong> <span style="color:gray;">➡ No Change</span></div>`;
+          const diff = curr - prev;
+          const pct = ((diff / prev) * 100).toFixed(1);
+          let icon = "➡", color = "gray", text = "No Change";
+          if (curr > prev) {
+            icon = "🔺";
+            color = "green";
+            text = `${pct}% increase`;
+          } else if (curr < prev) {
+            icon = "🔻";
+            color = "red";
+            text = `${Math.abs(pct)}% decrease`;
+          }
+
+          return `
+            <div class="trend-card">
+              <strong>${label}</strong><br>
+              <span style="color: ${color}; font-size: 1.2rem;">${icon} ${text}</span>
+            </div>
+          `;
         }).join('');
       };
 
       draw();
 
-      // Redraw on resize
       window.addEventListener('resize', () => {
         clearTimeout(window._chartResizeTimer);
         window._chartResizeTimer = setTimeout(draw, 150);
