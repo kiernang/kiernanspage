@@ -330,7 +330,7 @@ section h2 {
     // 
     const options = {
       title: 'Median Rental Prices by Bedroom Count',
-      backgroundColor: '#bfffbf',
+      backgroundColor: 'transparent',
       height: 750,
       width: 1200,
       curveType: 'function',
@@ -369,15 +369,15 @@ section h2 {
               <p>- A benefit of the above scraper is it creates sufficient quantity of data that you can use it for forecasting purposes. Here is a snapshot of what it can do.</p>
                  <br>
     <img src="images/1_bed_prophet_apt.png" alt="Forecasted 1-bedroom apartment prices" style="max-width:100%; height:auto; margin: 1rem 0;">
-    <br>
+
                  <p>Taking the median daily price (after cleaning data and ensuring there are no outliers) shows the downward trajectory (as of June 2025) of the asking price of 1-bedroom apartments in Toronto. Expanding this to 2-bedrooms:</p>
                <br>
     <img src="images/2_bed_prophet_apt.png" alt="Forecasted 2-bedroom apartment prices" style="max-width:100%; height:auto; margin: 1rem 0;">
-    <br>
+ 
                 <p>shows a similar downward trajectory (albeit, prices peaked briefly in summer of 2024). Expanding again to aparments with 3+ bedrooms:</p>
                 <br>
     <img src="images/3_bed_prophet_apt.png" alt="Forecasted 3+ bedroom apartment prices" style="max-width:100%; height:auto; margin: 1rem 0;">
-    <br>
+  
                 <p>Shows that prices (although, grouping at 3+ bedrooms creates a noiser dataset) follow a similar pattern to 2 bedrooms, although prices have not dipped below 2024 levels. Looking at a monthly median price:</p>
                        <br>
     <img src="images/3_bed_median_prices.png" alt="Median prices, 3+ bedroom apartments" style="max-width:100%; height:auto; margin: 1rem 0;">
