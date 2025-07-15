@@ -304,13 +304,12 @@ section h2 {
               <li><a href="#">7-day average for Toronto Apartment prices on Kijiji</a>
                 <p>Using Kijiji data we can see how the 7-day median prices of new listings in Toronto has evolved over time. This chart updates automatically. This pulls directly from the google sheet that the data is stored in, so outliers remain in the dataset and can occasionally skew the data. Additionally, I group 3+ bedrooms together, so there are occassionally groups of listings that skew that series. The intention of this data is to create a time-series of rental listings that would have predictive power over trends in the rental market.</p>
 <!-- Chart container and trend widget -->
-<div style="display: flex; justify-content: center; margin: 2rem 0;">
+<div style="display: flex; flex-direction: column; align-items: center; margin: 2rem 0;">
   <div id="bedroom_price_chart" style="width: 100%; max-width: 1000px; height: 60vh; background-color: transparent;"></div>
+
+  <!-- Trend Widget -->
+  <div id="trend_widget" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;"></div>
 </div>
-
-<!-- Trend Widget -->
-<div id="trend_widget" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;"></div>
-
 <style>
   .trend-card {
     background-color: #f8f8f8;
@@ -328,6 +327,18 @@ section h2 {
 
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  function toggle(header) {
+    const list = header.nextElementSibling;
+    const isHidden = list.classList.contains('hidden');
+    list.classList.toggle('hidden');
+
+  
+    if (isHidden && window.google && window.google.visualization && typeof drawResponsiveChart === "function") {
+      setTimeout(drawResponsiveChart, 100); // slight delay to allow rendering
+    }
+  }
+</script                
 <script type="text/javascript">
   google.charts.load('current', { 'packages': ['corechart'] });
   google.charts.setOnLoadCallback(drawResponsiveChart);
