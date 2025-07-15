@@ -290,15 +290,17 @@ section h2 {
 <div style="display: flex; justify-content: center; margin: 2rem 0;">
   <div id="bedroom_price_chart" style="width: 100%; max-width: 1000px; height: 60vh; background-color: transparent;"></div>
 </div>
-                <!-- Trend Widget -->
+               
+<!-- Trend Widget -->
 <div id="trend_widget" style="text-align: center; margin-top: 1rem; font-size: 1.1rem;"></div>
+
 
 <!-- Google Charts -->
 <script type="text/javascript">
-  google.charts.load('current', { 'packages': ['corechart'] });
-  google.charts.setOnLoadCallback(drawResponsiveChart);
+  google.charts.load('current', { packages: ['corechart'] });
+  google.charts.setOnLoadCallback(drawChartWithTrends);
 
-  function drawResponsiveChart() {
+  function drawChartWithTrends() {
     const queryString = encodeURIComponent("SELECT A, E, F, G");
     const sheetID = "15lJpjMp9hnjy9EvOTxSrq0MvTCnRTiJLY-qkPblTQOY";
     const sheetName = "medians_by_beds";
@@ -312,7 +314,6 @@ section h2 {
       }
 
       const rawData = response.getDataTable();
-
       const data = new google.visualization.DataTable();
       data.addColumn('date', 'Date');
       data.addColumn('number', '1 Bedroom');
@@ -328,71 +329,64 @@ section h2 {
         ]);
       }
 
-      const isMobile = window.innerWidth < 600;
-      const options = {
-        title: 'Median Rental Prices by Bedroom Count',
-        backgroundColor: 'transparent',
-        height: isMobile ? 400 : 750,
-        width: '100%',
-        curveType: 'function',
-        legend: {
-          position: isMobile ? 'bottom' : 'center',
-          textStyle: {
-            fontSize: isMobile ? 9 : 11,
-            color: 'black'
-          }
-        },
-        hAxis: {
-          title: 'Date',
-          format: 'MMM yyyy',
-          slantedText: true,
-          textStyle: { fontSize: isMobile ? 10 : 12 },
-          titleTextStyle: { fontSize: isMobile ? 12 : 14 },
-          gridlines: { count: -1 }
-        },
-        vAxis: {
-          title: 'Price ($)',
-          textStyle: { fontSize: isMobile ? 10 : 12 },
-          titleTextStyle: { fontSize: isMobile ? 12 : 14 },
-          format: '$#,###'
-        },
-        colors: ['#104d1f', '#236333', '#1A4AFF'],
-        chartArea: { left: 60, top: 60, width: '80%', height: '60%' }
+      const draw = () => {
+        const isMobile = window.innerWidth < 600;
+        const options = {
+          title: 'Median Rental Prices by Bedroom Count',
+          backgroundColor: 'transparent',
+          height: isMobile ? 400 : 750,
+          width: '100%',
+          curveType: 'function',
+          legend: {
+            position: isMobile ? 'bottom' : 'center',
+            textStyle: {
+              fontSize: isMobile ? 9 : 11,
+              color: 'black'
+            }
+          },
+          hAxis: {
+            title: 'Date',
+            format: 'MMM yyyy',
+            slantedText: true,
+            textStyle: { fontSize: isMobile ? 10 : 12 },
+            titleTextStyle: { fontSize: isMobile ? 12 : 14 },
+            gridlines: { count: -1 }
+          },
+          vAxis: {
+            title: 'Price ($)',
+            textStyle: { fontSize: isMobile ? 10 : 12 },
+            titleTextStyle: { fontSize: isMobile ? 12 : 14 },
+            format: '$#,###'
+          },
+          colors: ['#104d1f', '#236333', '#1A4AFF'],
+          chartArea: { left: 60, top: 60, width: '80%', height: '60%' }
+        };
+
+        const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
+        chart.draw(data, options);
+
+        // Render trend widget AFTER chart
+        const lastIndex = data.getNumberOfRows() - 1;
+        const secondLastIndex = data.getNumberOfRows() - 2;
+        const trends = [
+          { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(secondLastIndex, 1) },
+          { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(secondLastIndex, 2) },
+          { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(secondLastIndex, 3) }
+        ];
+        const trendDiv = document.getElementById('trend_widget');
+        trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
+          if (curr > prev) return `<div><strong>${label}:</strong> <span style="color:green;">🔺 Trending Up</span></div>`;
+          if (curr < prev) return `<div><strong>${label}:</strong> <span style="color:red;">🔻 Trending Down</span></div>`;
+          return `<div><strong>${label}:</strong> <span style="color:gray;">➡ No Change</span></div>`;
+        }).join('');
       };
 
-      const chart = new google.visualization.LineChart(document.getElementById('bedroom_price_chart'));
-      chart.draw(data, options);
+      draw();
 
-      // Add trend widget
-      const lastIndex = data.getNumberOfRows() - 1;
-      const secondLastIndex = data.getNumberOfRows() - 2;
-
-      const trends = [
-        { label: '1 Bedroom', curr: data.getValue(lastIndex, 1), prev: data.getValue(secondLastIndex, 1) },
-        { label: '2 Bedroom', curr: data.getValue(lastIndex, 2), prev: data.getValue(secondLastIndex, 2) },
-        { label: '3+ Bedrooms', curr: data.getValue(lastIndex, 3), prev: data.getValue(secondLastIndex, 3) }
-      ];
-
-      const trendDiv = document.getElementById('trend_widget');
-      trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
-        if (curr > prev) return `<div><strong>${label}:</strong> <span style="color:green;">🔺 Trending Up</span></div>`;
-        if (curr < prev) return `<div><strong>${label}:</strong> <span style="color:red;">🔻 Trending Down</span></div>`;
-        return `<div><strong>${label}:</strong> <span style="color:gray;">➡ No Change</span></div>`;
-      }).join('');
-
-      // Redraw on resize with debounce
-      let resizeTimer;
+      // Redraw on resize
       window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          chart.draw(data, options);
-          // re-render trend widget
-          trendDiv.innerHTML = trends.map(({ label, curr, prev }) => {
-            if (curr > prev) return `<div><strong>${label}:</strong> <span style="color:green;">🔺 Trending Up</span></div>`;
-            if (curr < prev) return `<div><strong>${label}:</strong> <span style="color:red;">🔻 Trending Down</span></div>`;
-            return `<div><strong>${label}:</strong> <span style="color:gray;">➡ No Change</span></div>`;
-          }).join('');
-        }, 150);
+        clearTimeout(window._chartResizeTimer);
+        window._chartResizeTimer = setTimeout(draw, 150);
       });
     });
   }
